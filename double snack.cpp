@@ -3,7 +3,7 @@
 #include <conio.h>
 #include <time.h>
 #include <ctype.h>
-#include <ncurses/ncurses.h>  
+#include <ncurses/ncurses.h>  //a library for creating text-based user interfaces (TUI)
 
 #define cols 25
 #define rows 25
@@ -24,12 +24,11 @@ void fill_board() {  // Tayyab: Fills the game board with borders and empty spac
                 board[y * cols + x] = ' ';  // Empty space
             }
         }
-    }
+    } // the mathematical funchion "y * cols + x" used here is for indexing 2D array by using 1D array 
 }
 
 void clear_screen() {  // Essa: Clears the console screen
-   // system("cls");  // Windows-specific screen clear
-   refresh();   // Changed to use 'refresh()' for ncurses screen update.
+   refresh();   //for ncurses screen update,
 }
 
 void board_printer() {  // Essa: Prints the current game board
@@ -37,7 +36,7 @@ void board_printer() {  // Essa: Prints the current game board
 
     for (y = 0; y < rows; y++) {
         for (x = 0; x < cols; x++) {
-            putch(board[y * cols + x]);
+            putch(board[y * cols + x]); //putch funchion output only single character
         }
         putch('\n');
     }
@@ -80,8 +79,8 @@ void snake_move(int deltaX, int deltaY) {  // Essa: Moves the snake by updating 
 }
 
 void keyboard_reader() {  // Essa: Reads the key press and moves the snake accordingly
-	int ch = getch();
-	static int deltaX = 0, deltaY = 0;  // Added static variables for persistent movement direction.
+	int ch = getch(); // is used to read a single character of input from the user, It is a blocking function.
+	static int deltaX = 0, deltaY = 0;  // Added static variables for persistent movement direction, so that the values does not change.
 	
     switch (tolower(ch)) {
         case 'w': deltaX =  0; deltaY = -1; break;  // Move up
@@ -145,15 +144,15 @@ void game_rules() {  // Hanzala: Checks the game rules like collision and food c
 
 int main(int argc, char **argv) {
     srand(time(0));
-	initscr();
-	noecho();
-	timeout(100);
+	initscr();  // Initialize the ncurses library
+	noecho(); // cursor does not follow the snake, stays in a smae position
+	timeout(100); // the program will wait for 1/100s and then continue with execution if no input is received.
 	
     sanp_setter();
     setup_food();
 
     while (!isGameOver) {
-    	move(0,0); 
+    	move(0,0); // move the cursor to a specific position on the screen. 
         fill_board();
         draw_food();
         draw_snake();
@@ -166,11 +165,11 @@ int main(int argc, char **argv) {
     }
     
 	move(cols,0);
-    printw("Game Over, Final score: %d\n", sanp.length * 100);   //changed 'printf' to 'printw' bcz of ncurses library
+    printw("Game Over, Final score: %d\n", sanp.length * 100); 
 
     while (1) getch(); 
 
-	endwin();
+	endwin(); // End the ncurses mode and restore the terminal
 
     return 0;
 }
