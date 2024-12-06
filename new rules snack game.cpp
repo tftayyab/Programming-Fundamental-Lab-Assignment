@@ -8,7 +8,7 @@
 
 #define cols 25
 #define rows 25
-#define foods 50
+#define foods 1
 
 char board[cols * rows];
 
