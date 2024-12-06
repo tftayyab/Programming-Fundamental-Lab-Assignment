@@ -144,36 +144,37 @@ void displayFunc() {
 
     int y,x;
 
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT); //Clears the buffer to prepare for rendering
 
 
     for (y = 0; y < rows; y++) {
         for (x = 0; x < cols; x++) {
             int ch = (board[y * cols + x]);
-            float quadXSize = 2 / (float)cols;
+            //calculating vertices for the square screen where snake run
+            float quadXSize = 2 / (float)cols; 
             float quadYSize = 2 / (float)rows;
-            
+            // colouring the game
             switch(ch) {
-                case '#': glColor3f( 0.5, 0.5, 0.5 ); break;
+                case '#': glColor3f( 0.5, 0.5, 0.5 ); break; //Sets the color for the vertices
                 case '@': glColor3f( 1.0, 0.0, 0.0 ); break;
                 case '*': glColor3f( 1.0, 0.0, 0.0 ); break;
                 case '+': glColor3f( 0.0, 1.0, 0.0 ); break;
                 case ' ': glColor3f( 0.0, 0.0, 0.0 ); break;
                 case 'X': glColor3f( 1.0, 0.0, 1.0 ); break; //Game Over
             }
-
-            glBegin(GL_QUADS);
-            glVertex3f( quadXSize * (x+0) - 1, quadYSize * ((rows-y-1)+0) - 1, 0.0);
+//calculating vertices for the square screen where snake run
+            glBegin(GL_QUADS); //Define the primitive
+            glVertex3f( quadXSize * (x+0) - 1, quadYSize * ((rows-y-1)+0) - 1, 0.0); //Specifies the vertices of the shape
             glVertex3f( quadXSize * (x+1) - 1, quadYSize * ((rows-y-1)+0) - 1, 0.0);
             glVertex3f( quadXSize * (x+1) - 1, quadYSize * ((rows-y-1)+1) - 1, 0.0);
             glVertex3f( quadXSize * (x+0) - 1, quadYSize * ((rows-y-1)+1) - 1, 0.0);
-            glEnd();
+            glEnd(); //Define the primitive
 
         }
         putchar('\n');
     }
 
-    glutSwapBuffers();
+    glutSwapBuffers(); //to swap the front and back buffers in a double-buffered window
 
 }
 
@@ -182,17 +183,27 @@ int deltaX = 0, deltaY = 0;
 void keyboardFunc(unsigned char key, int x, int y) {
 
     switch (tolower(key)) {
-        case 'w': deltaX =  0; deltaY = -1; break;  // Move up
-        case 's': deltaX =  0; deltaY =  1; break;   // Move down
-        case 'a': deltaX = -1; deltaY =  0; break;  // Move left
-        case 'd': deltaX =  1; deltaY =  0; break;   // Move right
+        case 'w' : deltaX =  0; deltaY = -1; break; // Move up
+        case 's' : deltaX =  0; deltaY =  1; break; // Move down
+        case 'a' : deltaX = -1; deltaY =  0; break;// Move left
+        case 'd' : deltaX =  1; deltaY =  0; break; // Move right
     }
 
 }
 
+void specialKeyFunc(int key, int x, int y) {
+    switch (key) {
+        case GLUT_KEY_UP:    deltaX =  0; deltaY = -1; break; // Move up
+        case GLUT_KEY_DOWN:  deltaX =  0; deltaY =  1; break; // Move down
+        case GLUT_KEY_LEFT:  deltaX = -1; deltaY =  0; break; // Move left
+        case GLUT_KEY_RIGHT: deltaX =  1; deltaY =  0; break; // Move right
+    }
+}
+
+
 void idleFunc() {
 
-    usleep(100000);
+    usleep(100000); //pause or delay the execution of a program for a specified number of microseconds
 
     fill_board();
     draw_food();
@@ -203,25 +214,28 @@ void idleFunc() {
         snake_move(deltaX, deltaY);
     }
 
-    glutPostRedisplay();
+    glutPostRedisplay(); //request a redraw of the window
 }
 
 int main(int argc, char **argv) {
-    srand(time(0));
+    srand(time(0)); //seeding
 
     sanp_setter();
     setup_food();
 
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize(400, 400);
-    glutCreateWindow("Snake Game");
+    glutInit(&argc, argv);  // Initialize GLUT
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB); //how the window will be displayed, double buffering avoid flickering and tearing when rendering, RGB color mode for the window
+    glutInitWindowSize(400, 400); //sets the initial width and height of the window to be created.
+    glutCreateWindow("Snake Game"); //to create a new OpenGL window
 
-    glutDisplayFunc(displayFunc);
-    glutKeyboardFunc(keyboardFunc);
-    glutIdleFunc(idleFunc);
+    glutDisplayFunc(displayFunc); //sets the display callback function for the current window, the displayfunc tells how to render
+    glutKeyboardFunc(keyboardFunc); //set a keyboard callback function that handles keyboard input for the current window
+    glutSpecialFunc(specialKeyFunc); //callback function to handle special keyboard events, such as arrow keys and function keys
+    glutIdleFunc(idleFunc); //idle callback is called repeatedly when no other events are being processed
 
-    glutMainLoop();
+    glutMainLoop(); //loop continues indefinitely until the program terminates
+
+
 
     return 0;
 }
