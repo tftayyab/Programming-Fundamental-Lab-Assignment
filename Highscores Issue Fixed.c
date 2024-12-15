@@ -27,7 +27,7 @@ int gameOverTimeout = 0;
 int deltaX = 0, deltaY = 0;
 
 #define MAX_NAME_LENGTH 20
-#define MAX_SCORES 1000
+#define MAX_SCORES 10
 
 typedef struct {
     char name[MAX_NAME_LENGTH];
@@ -181,8 +181,18 @@ void sanp_setter() { //// Tayyab: Initializes the snake with a random position a
     }
 }
 
+void resetHighScore() {
+    // Reset the name (set the first character to '\0' to clear the string)
+    highScores->name[0] = '\0';
+
+    // Reset the score to 0
+    highScores->score = 0;
+}
+
 void loadHighScores() {
     FILE* file = fopen("D:/Highscores.txt", "r");
+
+    resetHighScore();
 
     while (fscanf(file, "Name  = %s Score = %d\n", highScores[totalScores].name, &highScores[totalScores].score) != EOF) {
         totalScores++;
@@ -478,6 +488,8 @@ void displayGameOver() {
 void displayHighscores() {
     glClear(GL_COLOR_BUFFER_BIT);
 
+    resetHighScore();
+
     loadHighScores();
     qsort(highScores, totalScores, sizeof(HighScore), compareScores);  // Sort the high scores
 
@@ -494,6 +506,7 @@ void displayHighscores() {
     drawText(-0.45f, -0.7f, "Press Escape to return to menu.", GLUT_BITMAP_HELVETICA_12);  // Escape to return
 
     glFlush();
+    glutSwapBuffers();
 }
 
 void displayMenu() {
@@ -559,6 +572,7 @@ void endGame() {
     }
 
     currentState = GAME_OVER;
+    totalScores = 0;
     SnakegameTerminator();
     glutDisplayFunc(displaychecker);
 }
@@ -641,7 +655,7 @@ void handleMenuInput(unsigned char key, int x, int y) {
                 currentState = HIGHSCORE_SCREEN;
                 displayHighscores();
 
-                glFlush();
+                // glFlush();
                 glutSwapBuffers();
                 glutPostRedisplay();
             }
@@ -722,6 +736,7 @@ int main(int argc, char** argv)
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);//how the window will be displayed, double buffering avoid flickering and tearing when rendering, RGB color mode for the window
     glutInitWindowSize(cols * 16, (rows + logo) * 16); //sets the initial width and height of the window to be created.
     glutCreateWindow("Anaconda");//to create a new OpenGL window
+
 
     glutDisplayFunc(displaychecker);
     glutKeyboardFunc(handleMenuInput);
