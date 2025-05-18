@@ -22,6 +22,8 @@ enum MenuState currentState = INTRO_MENU;
 
 char board[cols * rows];
 
+char textfile[20] = "Highscores.txt"
+
 int isGameOver = 0;
 int gameOverTimeout = 0;
 int deltaX = 0, deltaY = 0;
@@ -65,7 +67,7 @@ struct Food food[foods];
 
 void storename() {
     FILE* file;
-    file = fopen("E:/Highscores.txt", "a");
+    file = fopen(textfile, "a");
 
     fprintf(file, "Name  = %s ", playerName);
 
@@ -190,7 +192,7 @@ void resetHighScore() {
 }
 
 void loadHighScores() {
-    FILE* file = fopen("E:/Highscores.txt", "r");
+    FILE* file = fopen(textfile "r");
 
     resetHighScore();
 
@@ -380,7 +382,7 @@ void SnakegameTerminator() {
 
 void storescore() {
     FILE* file;
-    file = fopen("E:/Highscores.txt", "a");
+    file = fopen(textfile, "a");
 
     fprintf(file, "Score = %d\n", highscore);
 
