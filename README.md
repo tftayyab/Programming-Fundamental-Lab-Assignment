@@ -36,4 +36,13 @@ We took guidance from the amazing [Eight Sprites YouTube Channel](https://www.yo
 
 ---
 
+## How to setup 
+1. Open the project file in Visual Code.
+2. Download Run++ extension.
+3. Open line.cpp file.
+4. Right click and select Run++.
+5. Enjoy the game.
+
+---
+
 Feel free to explore our project. Enjoy playing! 🚀
