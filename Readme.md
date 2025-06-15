@@ -1,11 +1,11 @@
-# ?? Snake Game - Programming Fundamentals Project  
+# 🐍 Snake Game - Programming Fundamentals Project  
 
-Welcome to our first **university Programming Fundamentals project**! ??  
+Welcome to our first **university Programming Fundamentals project**! 🎉  
 We are students from the **Institute of Business Management**, and we decided to create a **classic Snake game** with simple graphics using the **C language**.  
 
 ---
 
-## ? Team Members  
+## ✨ Team Members  
 - **Hanzala**  
 - **Tayyab**  
 - **Anoosh**  
@@ -13,12 +13,12 @@ We are students from the **Institute of Business Management**, and we decided to
 
 ---
 
-## ?? How to Play  
+## 🎮 How to Play  
 1. Control the snake using these keys:  
-   - **W**: Move Up ??  
-   - **A**: Move Left ??  
-   - **S**: Move Down ??  
-   - **D**: Move Right ??  
+   - **W**: Move Up ⬆️  
+   - **A**: Move Left ⬅️  
+   - **S**: Move Down ⬇️  
+   - **D**: Move Right ➡️  
 
 2. **Objective**:  
    - Eat food to score points.  
@@ -26,12 +26,12 @@ We are students from the **Institute of Business Management**, and we decided to
 
 ---
 
-## ?? Programming Language  
+## 🔧 Programming Language  
 - **C Language**  
 
 ---
 
-## ?? Resources  
+## 📚 Resources  
 We took guidance from the amazing [Eight Sprites YouTube Channel](https://www.youtube.com/@eightsprites) during development.  
 
 ---
@@ -45,4 +45,4 @@ We took guidance from the amazing [Eight Sprites YouTube Channel](https://www.yo
 
 ---
 
-Feel free to explore our project. Enjoy playing! ??
+Feel free to explore our project. Enjoy playing! 🚀
